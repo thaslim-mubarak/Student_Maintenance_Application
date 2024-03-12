@@ -10,6 +10,7 @@ import com.dto.ResponseStructure;
 import com.entity.Marks;
 import com.entity.Users;
 import com.utilities.Grades;
+import com.utilities.UpdateEmail;
 
 @Service
 public class UsersService {
@@ -50,7 +51,7 @@ public class UsersService {
 		return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.FOUND);
 	}
 	
-	public ResponseEntity<ResponseStructure<Users>> updateUser(String email,int id){
+	public ResponseEntity<ResponseStructure<Users>> updateUser(UpdateEmail email,int id){
 		Users u=users_dao.updateUser(email, id);
 		
 		responseStructure.setStatusCode(HttpStatus.OK.value());

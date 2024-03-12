@@ -14,6 +14,7 @@ import com.exceptions.StudentNotFoundException;
 import com.repository.UsersRepository;
 import com.utilities.Grades;
 import com.utilities.GradeSetter;
+import com.utilities.UpdateEmail;
 
 @Repository
 public class UsersDao {
@@ -57,11 +58,11 @@ public class UsersDao {
 		}
 	}
 
-	public Users updateUser(String email, int id) {
+	public Users updateUser(UpdateEmail email, int id) {
 		Optional<Users> opt_users = usersRepository.findById(id);
 		if (opt_users.isPresent()) {
 			Users u = opt_users.get();
-			u.setEmail(email);
+			u.setEmail(email.getEmail());
 			usersRepository.save(u);
 			return u;
 		} else {
