@@ -18,7 +18,7 @@ public class Update {
 		
 		if(marks.size() <= 3) {
 			for(Marks mark : marks) {
-				total = mark.getLanguage() + mark.getEnglish() + mark.getMaths() + mark.getScience() + mark.getSs();
+				total += mark.getLanguage() + mark.getEnglish() + mark.getMaths() + mark.getScience() + mark.getSs();
 			}
 		}
 		else {
