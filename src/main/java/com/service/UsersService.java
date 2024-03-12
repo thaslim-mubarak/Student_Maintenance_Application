@@ -78,11 +78,11 @@ public class UsersService {
 
 		users_dao.updateMarks(id, mark);
 
-		responseStructureMarks.setStatusCode(HttpStatus.CREATED.value());
-		responseStructureMarks.setMessage(HttpStatus.CREATED.getReasonPhrase());
+		responseStructureMarks.setStatusCode(HttpStatus.OK.value());
+		responseStructureMarks.setMessage(HttpStatus.OK.getReasonPhrase());
 		responseStructureMarks.setData(mark);
 
-		return new ResponseEntity<ResponseStructure<Marks>>(responseStructureMarks, HttpStatus.CREATED);
+		return new ResponseEntity<ResponseStructure<Marks>>(responseStructureMarks, HttpStatus.OK);
 	}
 	
 	public ResponseEntity<ResponseStructure<Double>> getAggMarks(int id) {
