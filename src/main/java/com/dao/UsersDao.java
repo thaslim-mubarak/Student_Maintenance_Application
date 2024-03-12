@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.entity.Marks;
 import com.entity.Users;
-import com.exceptions.MarksException;
 import com.exceptions.StudentNotFoundException;
 import com.repository.UsersRepository;
 import com.utilities.Grades;
 import com.utilities.GradeSetter;
 import com.utilities.UpdateEmail;
+
+import jakarta.validation.ValidationException;
 
 @Repository
 public class UsersDao {
@@ -42,7 +43,7 @@ public class UsersDao {
 				user.setGrade(GradeSetter.setGrade(user));
 				return usersRepository.save(user);
 			} else {
-				throw new MarksException("Three marks are allowed for a student");
+				throw new ValidationException("Only three marks are allowed for a student");
 			}
 		} else {
 			throw new StudentNotFoundException("Student with the ID: " + id + " not found");

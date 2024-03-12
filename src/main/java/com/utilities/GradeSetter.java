@@ -16,12 +16,12 @@ public class GradeSetter {
 		double total = 0;
 		double grade_points = 0;
 
-		if (marks.size() <= 3 && marks.size() > 0) {
-			
-			for(Marks m : marks) {
+		if (marks.size() <= 3 && marks.size() >= 0) {
+
+			for (Marks m : marks) {
 				total += m.getLanguage() + m.getEnglish() + m.getMaths() + m.getScience() + m.getSs();
 			}
-			
+
 			switch (marks.size()) {
 			case 1: {
 				grade_points = total / 50;
@@ -36,9 +36,11 @@ public class GradeSetter {
 				break;
 			}
 			}
-			
-			if(grade_points >= 0 && grade_points<=10) {
-				if (grade_points >= 9.1 && grade_points <= 10.0) {
+
+			if (grade_points >= 0 && grade_points <= 10) {
+				if (grade_points == 0) {
+					return null;
+				} else if (grade_points >= 9.1 && grade_points <= 10.0) {
 					return Grades.O;
 				} else if (grade_points >= 8.1 && grade_points <= 9.0) {
 					return Grades.A;
@@ -52,9 +54,8 @@ public class GradeSetter {
 					return Grades.E;
 				} else {
 					return Grades.FAIL;
-				} 
-			}
-			else {
+				}
+			} else {
 				throw new ValidationException("Marks should be between 0 and 500");
 			}
 		} else {
