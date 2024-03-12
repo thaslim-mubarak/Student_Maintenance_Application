@@ -60,7 +60,7 @@ public class UsersController {
 	}
 
 	@PutMapping("/student/{id}")
-	public ResponseEntity<ResponseStructure<Marks>> updateHalfYearlyMarks(@PathVariable int id,
+	public ResponseEntity<ResponseStructure<Marks>> updateMarks(@PathVariable int id,
 			@Valid @RequestBody Marks mark, BindingResult results) {
 
 		if (results.hasErrors()) {

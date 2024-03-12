@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,7 @@ import com.exceptions.MarksException;
 import com.exceptions.StudentNotFoundException;
 import com.repository.UsersRepository;
 import com.utilities.Grades;
-import com.utilities.Update;
+import com.utilities.GradeSetter;
 
 @Repository
 public class UsersDao {
@@ -21,7 +22,10 @@ public class UsersDao {
 	private UsersRepository usersRepository;
 
 	public Users save(Users user) {
-		user.setGrade(Update.setGrade(user));
+		if(user.getMarks().size() == 0 || user.getMarks() == null) {
+			user.setMarks(new ArrayList<Marks>());
+		}
+		user.setGrade(GradeSetter.setGrade(user));
 		usersRepository.save(user);
 		return user;
 	}
@@ -34,7 +38,7 @@ public class UsersDao {
 			if (mark_list.size() <= 3) {
 				mark_list.add(mark);
 				user.setMarks(mark_list);
-				user.setGrade(Update.setGrade(user));
+				user.setGrade(GradeSetter.setGrade(user));
 				return usersRepository.save(user);
 			} else {
 				throw new MarksException("Three marks are allowed for a student");
@@ -57,10 +61,7 @@ public class UsersDao {
 		Optional<Users> opt_users = usersRepository.findById(id);
 		if (opt_users.isPresent()) {
 			Users u = opt_users.get();
-			u.setStud_id(u.getStud_id());
-			u.setName(u.getName());
 			u.setEmail(email);
-			u.setGrade(u.getGrade());
 			usersRepository.save(u);
 			return u;
 		} else {
