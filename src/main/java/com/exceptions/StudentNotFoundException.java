@@ -1,21 +1,20 @@
 package com.exceptions;
 
 public class StudentNotFoundException extends RuntimeException {
+	String exception = "";
 
-	String message = "";
+	public StudentNotFoundException(String exception) {
+		this.exception = exception;
+	}
 
 	public StudentNotFoundException() {
 		super();
 	}
 
-	public StudentNotFoundException(String message) {
-		super();
-		this.message = message;
-	}
-
 	@Override
 	public String getMessage() {
-		return message;
+
+		return exception;
 	}
 
 }
