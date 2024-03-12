@@ -7,7 +7,7 @@ import com.entity.Users;
 
 import jakarta.validation.ValidationException;
 
-public class Update {
+public class GradeSetter {
 
 	public static Grades setGrade(Users user) {
 
@@ -16,10 +16,9 @@ public class Update {
 		double total = 0;
 		double grade_points = 0;
 
-		if (marks.size() <= 3 && marks.size() > 0) {
+		if (marks.size() <= 3 && marks.size() >= 0) {
 
-			for (int i = 0; i <= marks.size() - 1; i++) {
-				Marks m = marks.get(i);
+			for (Marks m : marks) {
 				total += m.getLanguage() + m.getEnglish() + m.getMaths() + m.getScience() + m.getSs();
 			}
 
@@ -39,7 +38,9 @@ public class Update {
 			}
 
 			if (grade_points >= 0 && grade_points <= 10) {
-				if (grade_points >= 9.1 && grade_points <= 10.0) {
+				if (grade_points == 0) {
+					return null;
+				} else if (grade_points >= 9.1 && grade_points <= 10.0) {
 					return Grades.O;
 				} else if (grade_points >= 8.1 && grade_points <= 9.0) {
 					return Grades.A;

@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,12 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.entity.Marks;
 import com.entity.Users;
-import com.exceptions.MarksException;
 import com.exceptions.StudentNotFoundException;
 import com.repository.UsersRepository;
 import com.utilities.Grades;
-import com.utilities.Update;
+import com.utilities.GradeSetter;
 import com.utilities.UpdateEmail;
+
+import jakarta.validation.ValidationException;
 
 @Repository
 public class UsersDao {
@@ -22,7 +24,10 @@ public class UsersDao {
 	private UsersRepository usersRepository;
 
 	public Users save(Users user) {
-		user.setGrade(Update.setGrade(user));
+		if(user.getMarks().size() == 0 || user.getMarks() == null) {
+			user.setMarks(new ArrayList<Marks>());
+		}
+		user.setGrade(GradeSetter.setGrade(user));
 		usersRepository.save(user);
 		return user;
 	}
@@ -35,10 +40,10 @@ public class UsersDao {
 			if (mark_list.size() <= 3) {
 				mark_list.add(mark);
 				user.setMarks(mark_list);
-				user.setGrade(Update.setGrade(user));
+				user.setGrade(GradeSetter.setGrade(user));
 				return usersRepository.save(user);
 			} else {
-				throw new MarksException("Three marks are allowed for a student");
+				throw new ValidationException("Only three marks are allowed for a student");
 			}
 		} else {
 			throw new StudentNotFoundException("Student with the ID: " + id + " not found");
@@ -58,7 +63,6 @@ public class UsersDao {
 		Optional<Users> opt_users = usersRepository.findById(id);
 		if (opt_users.isPresent()) {
 			Users u = opt_users.get();
-			u.setStud_id(u.getStud_id());
 			u.setEmail(email.getEmail());
 			usersRepository.save(u);
 			return u;

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.dto.ResponseStructure;
+import com.exceptions.StudentNotFoundException;
 
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 
 @ControllerAdvice
 public class CommonExceptionsHandler extends ResponseEntityExceptionHandler{
@@ -36,6 +38,22 @@ public class CommonExceptionsHandler extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.FAILED_DEPENDENCY);
 	}
 	
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<ResponseStructure<String>> validationExceptionHandler(ValidationException exceptions){
+		responseStructure.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		responseStructure.setMessage(HttpStatus.BAD_REQUEST.getReasonPhrase());
+		responseStructure.setData(exceptions.getMessage());
+		
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.BAD_REQUEST);
+	}
 	
+	@ExceptionHandler(StudentNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> studentNotFoundException(StudentNotFoundException exceptions) {
+		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+		responseStructure.setMessage(HttpStatus.NOT_FOUND.getReasonPhrase());
+		responseStructure.setData(exceptions.getMessage());
+
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
+	}
 
 }
