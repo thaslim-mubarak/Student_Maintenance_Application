@@ -9,6 +9,7 @@ import com.dao.UsersDao;
 import com.dto.ResponseStructure;
 import com.entity.Marks;
 import com.entity.Users;
+import com.utilities.Grades;
 
 @Service
 public class UsersService {
@@ -21,6 +22,12 @@ public class UsersService {
 	
 	@Autowired
 	private ResponseStructure<Marks> responseStructureMarks;
+	
+	@Autowired
+	private ResponseStructure<Double> responseStructureDouble;
+	
+	@Autowired
+	private ResponseStructure<Grades> responseStructureGrade;
 
 	public ResponseEntity<ResponseStructure<Users>> save(Users user) {
 
@@ -76,5 +83,22 @@ public class UsersService {
 
 		return new ResponseEntity<ResponseStructure<Marks>>(responseStructureMarks, HttpStatus.CREATED);
 	}
+	
+	public ResponseEntity<ResponseStructure<Double>> getAggMarks(int id) {
 
+		responseStructureDouble.setStatusCode(HttpStatus.FOUND.value());
+		responseStructureDouble.setMessage(HttpStatus.FOUND.getReasonPhrase());
+		responseStructureDouble.setData(users_dao.getAggMarks(id));
+
+		return new ResponseEntity<ResponseStructure<Double>>(responseStructureDouble, HttpStatus.FOUND);
+	}
+	
+	public ResponseEntity<ResponseStructure<Grades>> getGrade(int id) {
+
+		responseStructureGrade.setStatusCode(HttpStatus.FOUND.value());
+		responseStructureGrade.setMessage(HttpStatus.FOUND.getReasonPhrase());
+		responseStructureGrade.setData(users_dao.getGrade(id));
+
+		return new ResponseEntity<ResponseStructure<Grades>>(responseStructureGrade, HttpStatus.FOUND);
+	}
 }

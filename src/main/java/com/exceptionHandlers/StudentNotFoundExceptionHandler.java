@@ -12,16 +12,16 @@ import com.dto.ResponseStructure;
 import com.exceptions.StudentNotFoundException;
 
 @ControllerAdvice
-public class StudentNotFoundExceptionHandler extends ResponseEntityExceptionHandler{
+public class StudentNotFoundExceptionHandler extends ResponseEntityExceptionHandler {
 	@Autowired
 	private ResponseStructure<String> responseStructure;
-	
+
 	@ExceptionHandler(StudentNotFoundException.class)
-	public ResponseEntity<ResponseStructure<String>> studentNotFoundException(StudentNotFoundException exceptions){
+	public ResponseEntity<ResponseStructure<String>> studentNotFoundException(StudentNotFoundException exceptions) {
 		responseStructure.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		responseStructure.setMessage(HttpStatus.BAD_REQUEST.getReasonPhrase());
 		responseStructure.setData(exceptions.getMessage());
-		
+
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.BAD_REQUEST);
 	}
 }

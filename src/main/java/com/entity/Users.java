@@ -34,7 +34,7 @@ public class Users {
 	@Size(min = 3, max = 30, message = "Name should be between 3 and 30 characters")
 	private String name;
 
-	@Column(unique = true, updatable = true)
+	@Column(updatable = true)
 	@Email(regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$", message = "Invalid email format")
 	private String email;
 

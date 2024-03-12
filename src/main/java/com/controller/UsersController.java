@@ -19,6 +19,7 @@ import com.entity.Users;
 import com.exceptions.MarksException;
 import com.exceptions.ValidationException;
 import com.service.UsersService;
+import com.utilities.Grades;
 
 import jakarta.validation.Valid;
 
@@ -71,5 +72,15 @@ public class UsersController {
 		}
 
 		return usersService.updateMarks(id, mark);
+	}
+	
+	@GetMapping("/student/grade/{id}")
+	public ResponseEntity<ResponseStructure<Grades>> getGrade(@PathVariable int id){
+		return usersService.getGrade(id);
+	}
+	
+	@GetMapping("/student/agg/{id}")
+	public ResponseEntity<ResponseStructure<Double>> getAggMarks(@PathVariable int id){
+		return usersService.getAggMarks(id);
 	}
 }

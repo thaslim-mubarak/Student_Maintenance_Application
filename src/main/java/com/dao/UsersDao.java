@@ -11,6 +11,7 @@ import com.entity.Users;
 import com.exceptions.MarksException;
 import com.exceptions.StudentNotFoundException;
 import com.repository.UsersRepository;
+import com.utilities.Grades;
 import com.utilities.Update;
 
 @Repository
@@ -48,7 +49,7 @@ public class UsersDao {
 		if (opt_users.isPresent()) {
 			return opt_users.get();
 		} else {
-			throw new StudentNotFoundException("student not found");
+			throw new StudentNotFoundException("Student not found");
 		}
 	}
 
@@ -56,11 +57,14 @@ public class UsersDao {
 		Optional<Users> opt_users = usersRepository.findById(id);
 		if (opt_users.isPresent()) {
 			Users u = opt_users.get();
+			u.setStud_id(u.getStud_id());
+			u.setName(u.getName());
 			u.setEmail(email);
+			u.setGrade(u.getGrade());
 			usersRepository.save(u);
 			return u;
 		} else {
-			throw new StudentNotFoundException("student not found");
+			throw new StudentNotFoundException("Student not found");
 		}
 	}
 
@@ -72,8 +76,37 @@ public class UsersDao {
 			return "user got deleted";
 		}
 		else {
-			throw new StudentNotFoundException("student not found");
+			throw new StudentNotFoundException("Student not found");
 		}
 	}
+	
+	public Grades getGrade(int id) {
+		Optional<Users> opt_users=usersRepository.findById(id);
+		if(opt_users.isPresent()) {
+			Users u=opt_users.get();
+			return u.getGrade();
+		}
+		else {
+			throw new StudentNotFoundException("Student not found");
+		}
+	}
+	
+	public double getAggMarks(int id) {
+		Optional<Users> opt_users=usersRepository.findById(id);
+		if(opt_users.isPresent()) {
+			Users u=opt_users.get();
+			List<Marks> marks = u.getMarks();
+			double total = 0;
+			for(Marks m : marks) {
+				total += m.getLanguage()+m.getEnglish()+m.getMaths()+m.getScience()+m.getSs();
+			}
+			return total/150;
+		}
+		else {
+			throw new StudentNotFoundException("Student not found");
+		}
+	}
+	
+	
 
 }
