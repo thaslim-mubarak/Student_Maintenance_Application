@@ -51,7 +51,7 @@ public class UsersController {
 
 	
 	@Operation(description = "to retrieve student",summary = "student will be retrieved")
-	@ApiResponses(value = @ApiResponse(description = "retrive an student", responseCode = "200"))
+	@ApiResponses(value = @ApiResponse(description = "retrive an student", responseCode = "302"))
 	@GetMapping("/student/{id}")
 	public ResponseEntity<ResponseStructure<Users>> getUser(@PathVariable int id){
 		return usersService.getUser(id);
