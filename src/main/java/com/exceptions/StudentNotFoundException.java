@@ -1,19 +1,20 @@
 package com.exceptions;
 
-public class ValidationException extends RuntimeException {
+public class StudentNotFoundException extends RuntimeException {
 	String exception = "";
 
-	public ValidationException(String exception) {
-
+	public StudentNotFoundException(String exception) {
 		this.exception = exception;
 	}
 
-	public ValidationException() {
+	public StudentNotFoundException() {
 		super();
 	}
 
 	@Override
 	public String getMessage() {
+
 		return exception;
 	}
+
 }
